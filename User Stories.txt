@@ -1,0 +1,33 @@
+
+
+All people are employees
+
+as an EMPLOYEE i can SUBMIT a REIMBURSEMENT FORM
+	-basic form table
+	-separate table for optional event-related attachments (file attachments)
+	-form retreival option
+		-form submittion page
+
+as an EMPLOYEE i can CHECK my REIMBURSEMENT BALANCE
+	-fetch of database info
+
+as an EMPLOYEE i can CANCEL my REQUEST
+
+as an EMPLOYEE i can REQUEST a STATUS UPDATE
+
+
+as a DIRECT SUPERVISOR/DEPARTMENT HEAD/BENCO i can REQUEST INFORMATION from those below me
+	-fetch info on applicant
+	-check for more info needed
+		-send request for more info
+
+as a DIRECT SUPERVISOR/DEPARTMENT HEAD/BENCO i can APPROVE a REIMBURSEMENT FORM
+
+as a BENCO i can ALTER a REIMBURSEMENT AMOUNT
+	-copy from 5.1
+
+as a BENCO i can APPROVE a GRADE
+
+as an EMPLOYEE i can SUBMIT a GRADE
+
+as a EMPLOYEE/DS/DH/BENCO i can ACCESS a GRADE
