@@ -1,0 +1,13 @@
+Employee
+e_id | reimbursement_balance | supervisor_id (e_id fk)| dept_id (d_id fk)
+
+Department
+d_id | dept_name | dept_head (e_id fk)
+
+Form Submission
+f_id | date/time | employee_id (e_id fk) |full_cost | grade_format_id (provided) | event_type (look up?) | description (justification) | approval_stage_id
+
+
+Approval Stage
+a_s_id | description
+
