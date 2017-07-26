@@ -1,7 +1,8 @@
 package com.trms.jdbc.doa;
 
 import java.sql.Connection;
-import java.sql.SQLException;
+
+import org.apache.log4j.Logger;
 
 import com.trms.jdbc.util.ConnectionFactory;
 
