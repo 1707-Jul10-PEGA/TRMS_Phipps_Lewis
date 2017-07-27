@@ -31,7 +31,7 @@ public class EmployeeImplementDOA implements EmployeeDOA {
 		ResultSet rs = pstmt.executeQuery();
 		
 		double balance = 0;
-		System.out.println("jkl");
+		
 		//store the balance into a double
 		if(rs.next()){
 			
@@ -52,27 +52,21 @@ public class EmployeeImplementDOA implements EmployeeDOA {
 	
 	
 	//forgot how our table works for this one. maybe return a boolean of active inactive status??
-	public boolean cancelRequest(int requestID) throws SQLException {
+	public void cancelRequest(int requestID) throws Exception {
 		
-		//prepare sql statement						??
-		String sql = "update form_submissions set status = false where formid = ?";
-		
-		PreparedStatement pstmt = conn.prepareStatement(sql);
-		
-		pstmt.setInt(1, requestID);
-		
-		//store result set into a variable of type ResultSet
-		ResultSet rs = pstmt.executeQuery();
-		
-		//store the status into a boolean variable
-		boolean status = false;
-		
-		while(rs.next()){
-			status = rs.getBoolean(1);
+		if(requestID < 0){
+			throw new Exception();
 		}
+		else{
+		//prepare sql statement						
+			String sql = "update form_submissions set status = -1 where formid = ?";
 		
-		//return the status
-		return status;
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+		
+			pstmt.setInt(1, requestID);
+		
+			pstmt.executeQuery();
+		}
 	}
 
 }

@@ -4,7 +4,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import java.sql.Connection;
 import java.sql.SQLException;
-
+import java.lang.Exception;
 import org.apache.log4j.Logger;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -52,8 +52,20 @@ public class EmployeeDOATest {
 	@Test
 	public void testGetReimbursementBalanceSucces() throws Exception{
 		logTest.debug("Testing getReimbursementBalance");
-		System.out.println(doa.getReimbursementBalance(26));
+		doa.getReimbursementBalance(1);
 	}
+	
+	@Test (expected = Exception.class)
+	public void testCancelRequestNegative() throws Exception{
+		logTest.debug("Testing cancelRequest");
+		doa.cancelRequest(-1);
+	}
+	@Test
+	public void testCancelRequest() throws Exception{
+		logTest.debug("Testing cancelRequest");
+		doa.cancelRequest(1);
+	}	
+	
 	
 	@AfterClass
 	public static void closout() throws SQLException{

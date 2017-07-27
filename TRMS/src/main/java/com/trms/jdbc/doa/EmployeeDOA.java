@@ -6,5 +6,5 @@ public interface EmployeeDOA {
 	//cancel
 	//check balance
 	double getReimbursementBalance(int employeeID) throws SQLException, Exception;
-	boolean cancelRequest(int requestID) throws SQLException;
+	void cancelRequest(int requestID) throws SQLException, Exception;
 }
