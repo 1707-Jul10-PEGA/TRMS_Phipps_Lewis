@@ -28,21 +28,26 @@ public class FormImplementDOA implements FormDOA {
 	/**
 	 * This method takes a formID and returns the cost (converted according to
 	 * grade scale) of the reimbursement to the company.
+	 * @Return Returns 0if it fails to retrieve a reimbursementcost, otherwise it retrieves the converted cost
 	 */
 	public double getReimbursementCostOnFormID(Integer formID) throws SQLException {
+		//SQL Statement
 		String sql = "SELECT Full_Cost, GRADE_PERCENT FROM Form_Submissions INNER JOIN GRADE_FORMAT ON  Form_Subbmissions.GRADE_FORMAT_ID = GRADE_FORMAT.GRADEID WHERE formID = ?";
+		//Prep statement and add the ID
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		pstmt.setInt(1, formID);
+		//Store ResultSet
 		ResultSet rs = pstmt.executeQuery();
 		double totalCost = 0;
 		double percentage;
 		if (rs.next()) {
+			//Percentage is drawn from the GRADE_FORMAT table
 			totalCost = rs.getDouble(1);
 			percentage = rs.getDouble(2);
 			// Convert to actual reinbursement cost
 			totalCost = totalCost * percentage;
 		} else {
-			// log.error("Failed to locate a form with that ID");
+			log.error("Failed to locate a form with that ID. Returning 0.");
 		}
 		return totalCost;
 	}
@@ -53,7 +58,9 @@ public class FormImplementDOA implements FormDOA {
 	 * @return Returns the full, unconverted cost of the reimbursement (what the employee submitted)
 	 */
 	public double getFullCostOnFormID(Integer formID) throws SQLException{
+		//SQL Statement
 		String sql = "SELECT Full_Cost FROM Form_Submissions WHERE formID = ?";
+		//Prepare with formID number
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		pstmt.setInt(1, formID);
 		ResultSet rs = pstmt.executeQuery();
@@ -62,7 +69,7 @@ public class FormImplementDOA implements FormDOA {
 		if (rs.next()) {
 			totalCost = rs.getDouble(1);
 		} else {
-			// log.error("Failed to locate a form with that ID");
+			log.error("Failed to locate a form with that ID Returning 0.");
 		}
 		return totalCost;
 	}
@@ -79,6 +86,7 @@ public class FormImplementDOA implements FormDOA {
 			return 0.0;
 		}
 		conn.setAutoCommit(false);
+		//SQL statement and preparation
 		String sql = "UPDATE Form_Submissions SET  FULL_COST = ? WHERE FormID = ? ";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		pstmt.setInt(1, formID);
@@ -86,7 +94,8 @@ public class FormImplementDOA implements FormDOA {
 		Savepoint s = conn.setSavepoint();
 		
 		int num = pstmt.executeUpdate();
-
+		
+		//Honestly I don't know why we do this or how we know to roll back here;
 		if (num > 1) {
 
 			conn.rollback(s);
@@ -97,8 +106,11 @@ public class FormImplementDOA implements FormDOA {
 		return newCost;
 	}
 
-	/*
-	 * returns the new total cost added to the Form_Submissions table
+	/**
+	 * This allows one to set a new cost via form ID, note this is the converted amount, use setFullCostOnFormID for full cost instead
+	 * @param formID form to be modified
+	 * @param newCost New, full cost of reimbursement to be set
+	 * @return returns the value given to the database if successful, otherwise returns 0.0;
 	 */
 	public double setReimbursementCostOnFormID(Integer formID, Double newCost) throws SQLException {
 		if(newCost <= 0.0)
@@ -106,6 +118,7 @@ public class FormImplementDOA implements FormDOA {
 			log.warn("Attempted to set Reimbursement amount to a zero or negative value");
 			return 0.0;
 		}
+		//SQL PREP, selects the percentage to calculate proper adjustment
 		String sql = "SELECT GRADE_PERCENT FROM Form_Submissions INNER JOIN GRADE_FORMAT ON Form_Subbmissions.GRADE_FORMAT_ID = GRADE_FORMAT.GRADEID WHERE formID = ?";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		pstmt.setInt(1, formID);
@@ -118,7 +131,11 @@ public class FormImplementDOA implements FormDOA {
 			newValue = newCost/percentage;
 
 		}
-
+		else{
+			log.error("failed to retrieve a related Grade");
+			return 0.0;
+		}
+		//S
 		String sql2 = "UPDATE Form_Submissions SET FULL_COST = ? WHERE FormID = ? ";
 		PreparedStatement pstmt2 = conn.prepareStatement(sql);
 		pstmt.setDouble(1, newValue);

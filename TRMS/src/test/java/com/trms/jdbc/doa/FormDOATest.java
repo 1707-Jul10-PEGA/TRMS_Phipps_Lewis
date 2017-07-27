@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 import org.apache.log4j.Logger;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.trms.jdbc.util.ConnectionFactory;
@@ -13,7 +14,12 @@ import com.trms.jdbc.util.ConnectionFactory;
 
 public class FormDOATest {
 	Logger logTest = Logger.getRootLogger();
-	Connection conn = null;
+	static Connection conn = null;
+	
+	@BeforeClass
+	public static void connSetup(){
+		conn = ConnectionFactory.getInstance().getConnection();
+	}
 	@Test
 	public void testConnection() throws SQLException{
 		Connection conn = ConnectionFactory.getInstance().getConnection();

@@ -156,11 +156,13 @@ INSERT INTO Employee (EmployeeID, firstName, lastName, userName, pass, Reimburse
 
 INSERT INTO FORM_SUBMISSIONS (FormID, EmployeeID, Date_Made, Full_Cost, Grade_Format_ID, Descript, Status) VALUES (1, 1, CURRENT_TIMESTAMP, 200, null, 'Testing', 1);
 
-INSERT INTO Approval_Status (StatusID, Descript) VALUES (0, 'No approvals');
-INSERT INTO Approval_Status (StatusID, Descript) VALUES (1, 'Direct Supervisor approval');
-INSERT INTO Approval_Status (StatusID, Descript) VALUES (2, 'Head of Department approval');
-INSERT INTO Approval_Status (StatusID, Descript) VALUES (3, 'BenCo Approval');
-INSERT INTO Approval_Status (StatusID, Descript) VALUES (4, 'Grade Approved');
+INSERT INTO Approval_Status (StatusID, Descript) VALUES (-1, 'Request Canceled');
+INSERT INTO Approval_Status (StatusID, Descript) VALUES (0, 'Request Denied');
+INSERT INTO Approval_Status (StatusID, Descript) VALUES (1, 'No approvals');
+INSERT INTO Approval_Status (StatusID, Descript) VALUES (2, 'Direct Supervisor approval');
+INSERT INTO Approval_Status (StatusID, Descript) VALUES (3, 'Head of Department approval');
+INSERT INTO Approval_Status (StatusID, Descript) VALUES (4, 'BenCo Approval');
+INSERT INTO Approval_Status (StatusID, Descript) VALUES (5, 'Grade Approved');
 
 INSERT INTO Grade_Format (GradeID, Grade_Percent, Grade_Descript) VALUES (1, 00.80, 'University Course');
 INSERT INTO Grade_Format (GradeID, Grade_Percent, Grade_Descript) VALUES (2, 00.60, 'Seminar');
