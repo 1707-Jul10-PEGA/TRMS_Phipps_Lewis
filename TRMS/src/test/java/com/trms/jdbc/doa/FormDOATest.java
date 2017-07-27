@@ -9,7 +9,7 @@ import org.junit.Test;
 
 import com.trms.jdbc.util.ConnectionFactory;
 
-import junit.framework.Assert;
+
 
 public class FormDOATest {
 	Logger logTest = Logger.getRootLogger();
