@@ -40,6 +40,8 @@ CREATE TABLE Employee
   EmployeeID number primary key,
   firstName varchar2(32),
   lastName varchar2(32),
+  userName varchar2(32),
+  password varchar2(32),
   Reimbursement_total number,
   Direct_Supervisor number,
   DepartmentID number
@@ -54,7 +56,7 @@ CREATE TABLE Department
 CREATE TABLE Form_Submissions
 (
   FormID number primary key,
-    EmployeeID number,
+  EmployeeID number,
   Date_Made DATE,
   Full_Cost number,
   Grade_Format_ID number,   -- Ask Nick if Grade format reference table is provided
@@ -72,6 +74,14 @@ CREATE TABLE Grade_Format
   Grade_Percent number(2, 2) not null,
   Grade_Descript varchar2(32)
 );
+CREATE TABLE Messages(
+  MessageID number primary key,
+  RecieverID number,
+  SenderID number,
+  Send_Date DATE,
+  varchar2(2048)
+
+)
 
 -- Employee's department foreign key
 ALTER TABLE Employee ADD CONSTRAINT FK_DepartmentID
@@ -133,10 +143,10 @@ TRUNCATE TABLE Department;
 TRUNCATE TABLE FORM_SUBMISSIONS;
 TRUNCATE TABLE GRADE_FORMAT;
 
-INSERT INTO Employee (EmployeeID, firstName, lastName, Reimbursement_total, Direct_Supervisor, DepartmentID) VALUES (1,'Basic', 'Employee', 1000, 2, 1);
-INSERT INTO Employee (EmployeeID, firstName, lastName, Reimbursement_total, Direct_Supervisor, DepartmentID) VALUES (2, 'Direct', 'Supervisor', 1000, null, 1);
-INSERT INTO Employee (EmployeeID, firstName, lastName, Reimbursement_total, Direct_Supervisor, DepartmentID) VALUES (3, 'Department', 'Head', 1000, null, 1);
-INSERT INTO Employee (EmployeeID, firstName, lastName, Reimbursement_total, Direct_Supervisor, DepartmentID) VALUES (4, 'Benco', 'regularBEN', 1000, null, 2);
+INSERT INTO Employee (EmployeeID, firstName, lastName, userName, password, Reimbursement_total, Direct_Supervisor, DepartmentID) VALUES (1,'Basic', 'Employee', 'Emp', 'pass', 1000, 2, 1);
+INSERT INTO Employee (EmployeeID, firstName, lastName, userName, password, Reimbursement_total, Direct_Supervisor, DepartmentID) VALUES (2, 'Direct', 'Supervisor', 'DS', 'pass', 1000, null, 1);
+INSERT INTO Employee (EmployeeID, firstName, lastName, userName, password, Reimbursement_total, Direct_Supervisor, DepartmentID) VALUES (3, 'Department', 'Head', 'DH', 'pass', 1000, null, 1);
+INSERT INTO Employee (EmployeeID, firstName, lastName, userName, password, Reimbursement_total, Direct_Supervisor, DepartmentID) VALUES (4, 'Benco', 'regularBEN', 'Benco', 'pass', 1000, null, 2);
 
 INSERT INTO Department (DepartmentID, Name, Department_Head) VALUES (1, 'HR', 3);
 INSERT INTO Department (DepartmentID, Name, Department_Head) VALUES (2, 'BenCo', 4);
