@@ -33,7 +33,7 @@ public class FormDOATest {
 	
 	
 	//Test the form cost get methods (2 methods)
-	assertTrue("Ensure output is 0 on negative input", setFullCostOnFormID(1, 200) );
+	assertTrue("Ensure output is 0 on negative input", setFullCostOnFormID(1, 200));
 	
 //	public double getReimbursementCostOnFormID(Integer formID)throws SQLException;
 //	public double getFullCostOnFormID(Integer formID)throws SQLException;

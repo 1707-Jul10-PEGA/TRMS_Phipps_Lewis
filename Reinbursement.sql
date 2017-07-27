@@ -75,7 +75,7 @@ CREATE TABLE Approval_Status
 CREATE TABLE Grade_Format
 (
   GradeID number primary key,
-  Grade_Percent number(2, 2) not null,
+  Grade_Percent number(8, 2) not null,
   Grade_Descript varchar2(32)
 );
 CREATE TABLE Messages(
