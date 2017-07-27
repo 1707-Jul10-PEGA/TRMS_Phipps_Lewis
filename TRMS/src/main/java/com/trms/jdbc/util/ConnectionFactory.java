@@ -31,10 +31,6 @@ public class ConnectionFactory{
 			Properties prop = new Properties();
 
 			try{
-				
-			FileWriter fw = new FileWriter("test.txt");
-			fw.write("hello");
-			fw.flush();
 			
 			prop.load(new FileReader("./datasource.properties"));
 																					
@@ -47,7 +43,7 @@ public class ConnectionFactory{
 					prop.getProperty("url"),
 					prop.getProperty("username"), 
 					prop.getProperty("password"));
-		//	log.debug("Read URL and login");
+			log.debug("Read URL and login");
 		} catch(SQLException e){
 			log.debug("Faild to read url username or password for database");
 			e.printStackTrace();
