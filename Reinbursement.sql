@@ -10,7 +10,11 @@
    Drop database if it exists
 ********************************************************************************/
 DROP USER trms CASCADE;
-
+--DROP TABLE EMPLOYEE;
+--DROP TABLE APPROVAL_STATUS;
+--DROP TABLE DEPARTMENT;
+--DROP TABLE FORM_SUBMISSIONS;
+--DROP TABLE GRADE_FORMAT;
 
 /*******************************************************************************
    Create database
@@ -41,7 +45,7 @@ CREATE TABLE Employee
   firstName varchar2(32),
   lastName varchar2(32),
   userName varchar2(32),
-  "PASSWORD" varchar2(32),
+  pass varchar2(32),
   Reimbursement_total number,
   Direct_Supervisor number,
   DepartmentID number
@@ -60,7 +64,7 @@ CREATE TABLE Form_Submissions
   Date_Made DATE,
   Full_Cost number,
   Grade_Format_ID number,   -- Ask Nick if Grade format reference table is provided
-  "DESCRIPTION" varchar2(3999),
+  Descript varchar2(3999),
   Status number
 );
 CREATE TABLE Approval_Status
@@ -81,23 +85,22 @@ CREATE TABLE Messages(
   Send_Date DATE,
   Message varchar2(2048)
 );
-
--- Employee's department foreign key
-ALTER TABLE Employee ADD CONSTRAINT FK_DepartmentID
-    FOREIGN KEY (DepartmentID) REFERENCES Department (DepartmentID) ON DELETE CASCADE;
-
---Department's Employee Foreign key (for department head)
-ALTER TABLE Department ADD CONSTRAINT FK_Department_Head
-    FOREIGN KEY (Department_Head) REFERENCES Employee (EmployeeID) ON DELETE CASCADE;
-
---Form submissions Employee submission
-ALTER TABLE Form_Submissions ADD CONSTRAINT FK_EmployeeID
-  FOREIGN KEY (EmployeeID) REFERENCES Employee (EmployeeID) ON DELETE CASCADE;
+---- Employee's department foreign key
+--ALTER TABLE Employee ADD CONSTRAINT FK_DepartmentID
+--    FOREIGN KEY (DepartmentID) REFERENCES Department (DepartmentID) ON DELETE CASCADE;
+--
+----Department's Employee Foreign key (for department head)
+--ALTER TABLE Department ADD CONSTRAINT FK_Department_Head
+--    FOREIGN KEY (Department_Head) REFERENCES Employee (EmployeeID) ON DELETE CASCADE;
+--
+----Form submissions Employee submission
+--ALTER TABLE Form_Submissions ADD CONSTRAINT FK_EmployeeID
+--  FOREIGN KEY (EmployeeID) REFERENCES Employee (EmployeeID) ON DELETE CASCADE;
 
   
 --Form_Submissions Grade format FK 
-ALTER TABLE Form_Submissions ADD CONSTRAINT FK_GradeFormatID
-  FOREIGN KEY (Grade_Format_ID) REFERENCES Approval_Stage (StageID) ON DELETE CASCADE;
+--ALTER TABLE Form_Submissions DROP CONSTRAINT FK_GradeFormatID;
+  --FOREIGN KEY (Grade_Format_ID) REFERENCES Approval_Stage (StageID) ON DELETE CASCADE;
 
 
 create sequence employee_seq;
@@ -142,15 +145,16 @@ TRUNCATE TABLE Department;
 TRUNCATE TABLE FORM_SUBMISSIONS;
 TRUNCATE TABLE GRADE_FORMAT;
 
-INSERT INTO Employee (EmployeeID, firstName, lastName, userName, password, Reimbursement_total, Direct_Supervisor, DepartmentID) VALUES (1,'Basic', 'Employee', 'Emp', 'pass', 1000, 2, 1);
-INSERT INTO Employee (EmployeeID, firstName, lastName, userName, password, Reimbursement_total, Direct_Supervisor, DepartmentID) VALUES (2, 'Direct', 'Supervisor', 'DS', 'pass', 1000, null, 1);
-INSERT INTO Employee (EmployeeID, firstName, lastName, userName, password, Reimbursement_total, Direct_Supervisor, DepartmentID) VALUES (3, 'Department', 'Head', 'DH', 'pass', 1000, null, 1);
-INSERT INTO Employee (EmployeeID, firstName, lastName, userName, password, Reimbursement_total, Direct_Supervisor, DepartmentID) VALUES (4, 'Benco', 'regularBEN', 'Benco', 'pass', 1000, null, 2);
+INSERT INTO Department (DepartmentID, Name, Department_Head) VALUES (1, 'HR', null);
+INSERT INTO Department (DepartmentID, Name, Department_Head) VALUES (2, 'BenCo', null);
 
-INSERT INTO Department (DepartmentID, Name, Department_Head) VALUES (1, 'HR', 3);
-INSERT INTO Department (DepartmentID, Name, Department_Head) VALUES (2, 'BenCo', 4);
+INSERT INTO Employee (EmployeeID, firstName, lastName, userName, pass, Reimbursement_total, Direct_Supervisor, DepartmentID) VALUES (1,'Basic', 'Employee', 'Emp', 'pass', 1000, 2, 1);
+INSERT INTO Employee (EmployeeID, firstName, lastName, userName, pass, Reimbursement_total, Direct_Supervisor, DepartmentID) VALUES (2, 'Direct', 'Supervisor', 'DS', 'pass', 1000, null, 1);
+INSERT INTO Employee (EmployeeID, firstName, lastName, userName, pass, Reimbursement_total, Direct_Supervisor, DepartmentID) VALUES (3, 'Department', 'Head', 'DH', 'pass', 1000, null, 1);
+INSERT INTO Employee (EmployeeID, firstName, lastName, userName, pass, Reimbursement_total, Direct_Supervisor, DepartmentID) VALUES (4, 'Benco', 'regularBEN', 'Benco', 'pass', 1000, null, 2);
 
-INSERT INTO FORM_SUBMISSION (FormID, EmployeeID, Date_Made, Full_Cost, Grade_Format_ID, "DESCRIPTION", Status) VALUES (1, 1, CURRENT_TIMESTAMP, 200, null, 'Testing', 1);
+
+INSERT INTO FORM_SUBMISSIONS (FormID, EmployeeID, Date_Made, Full_Cost, Grade_Format_ID, Descript, Status) VALUES (1, 1, CURRENT_TIMESTAMP, 200, null, 'Testing', 1);
 
 INSERT INTO Approval_Status (StatusID, Descript) VALUES (0, 'No approvals');
 INSERT INTO Approval_Status (StatusID, Descript) VALUES (1, 'Direct Supervisor approval');
