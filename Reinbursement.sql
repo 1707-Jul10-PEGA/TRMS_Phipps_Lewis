@@ -41,7 +41,7 @@ CREATE TABLE Employee
   firstName varchar2(32),
   lastName varchar2(32),
   userName varchar2(32),
-  password varchar2(32),
+  "PASSWORD" varchar2(32),
   Reimbursement_total number,
   Direct_Supervisor number,
   DepartmentID number
@@ -60,7 +60,7 @@ CREATE TABLE Form_Submissions
   Date_Made DATE,
   Full_Cost number,
   Grade_Format_ID number,   -- Ask Nick if Grade format reference table is provided
-  Description varchar2(3999),
+  "DESCRIPTION" varchar2(3999),
   Status number
 );
 CREATE TABLE Approval_Status
@@ -79,9 +79,8 @@ CREATE TABLE Messages(
   RecieverID number,
   SenderID number,
   Send_Date DATE,
-  varchar2(2048)
-
-)
+  Message varchar2(2048)
+);
 
 -- Employee's department foreign key
 ALTER TABLE Employee ADD CONSTRAINT FK_DepartmentID
@@ -151,7 +150,7 @@ INSERT INTO Employee (EmployeeID, firstName, lastName, userName, password, Reimb
 INSERT INTO Department (DepartmentID, Name, Department_Head) VALUES (1, 'HR', 3);
 INSERT INTO Department (DepartmentID, Name, Department_Head) VALUES (2, 'BenCo', 4);
 
-INSERT INTO FORM_SUBMISSION (FormID, Date_Made, Full_Cost, Grade_Format_ID, Description, Status) VALUES (1, 1, CURRENT_TIMESTAMP, 200, null, 'Testing', 1);
+INSERT INTO FORM_SUBMISSION (FormID, EmployeeID, Date_Made, Full_Cost, Grade_Format_ID, "DESCRIPTION", Status) VALUES (1, 1, CURRENT_TIMESTAMP, 200, null, 'Testing', 1);
 
 INSERT INTO Approval_Status (StatusID, Descript) VALUES (0, 'No approvals');
 INSERT INTO Approval_Status (StatusID, Descript) VALUES (1, 'Direct Supervisor approval');

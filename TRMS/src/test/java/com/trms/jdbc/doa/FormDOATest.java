@@ -13,6 +13,7 @@ import com.trms.jdbc.util.ConnectionFactory;
 
 public class FormDOATest {
 	Logger logTest = Logger.getRootLogger();
+	Connection conn = null;
 	@Test
 	public void testConnection() throws SQLException{
 		Connection conn = ConnectionFactory.getInstance().getConnection();
@@ -26,12 +27,13 @@ public class FormDOATest {
 	@Test
 	public void testGetCostOnFormIDMethods() throws SQLException{
 		
-	//	assertTrue("Ensure output is 0 on negative input", getFullCostOnFormID(1) );
+
 		
 	}
 	
 	
 	//Test the form cost get methods (2 methods)
+	assertTrue("Ensure output is 0 on negative input", setFullCostOnFormID(1, 200) );
 	
 //	public double getReimbursementCostOnFormID(Integer formID)throws SQLException;
 //	public double getFullCostOnFormID(Integer formID)throws SQLException;
