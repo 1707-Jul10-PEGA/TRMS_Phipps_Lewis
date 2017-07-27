@@ -30,7 +30,7 @@ public class FormImplementDOA implements FormDOA {
 	 * grade scale) of the reimbursement to the company.
 	 * @Return Returns 0if it fails to retrieve a reimbursementcost, otherwise it retrieves the converted cost
 	 */
-	public double getReimbursementCostOnFormID(Integer formID) throws SQLException {
+	public double getReimbursementCostOnFormID(int formID) throws SQLException {
 		//SQL Statement
 		String sql = "SELECT Full_Cost, GRADE_PERCENT FROM Form_Submissions INNER JOIN GRADE_FORMAT ON  Form_Subbmissions.GRADE_FORMAT_ID = GRADE_FORMAT.GRADEID WHERE formID = ?";
 		//Prep statement and add the ID
@@ -57,7 +57,7 @@ public class FormImplementDOA implements FormDOA {
 	 * @param formID ID number of the form stored in our Form_Submissions Table
 	 * @return Returns the full, unconverted cost of the reimbursement (what the employee submitted)
 	 */
-	public double getFullCostOnFormID(Integer formID) throws SQLException{
+	public double getFullCostOnFormID(int formID) throws SQLException{
 		//SQL Statement
 		String sql = "SELECT Full_Cost FROM Form_Submissions WHERE formID = ?";
 		//Prepare with formID number
@@ -79,7 +79,7 @@ public class FormImplementDOA implements FormDOA {
 	 * @param newCost New, full cost of reimbursement to be set
 	 * @return returns the value given to the database if successful, otherwise returns 0.0;
 	 */
-	public double setFullCostOnFormID(Integer formID, Double newCost) throws SQLException{
+	public double setFullCostOnFormID(int formID, Double newCost) throws SQLException{
 		if(newCost <= 0.0)
 		{
 			log.warn("Attempted to set Reimbursement amount to a zero or negative value");
@@ -89,16 +89,18 @@ public class FormImplementDOA implements FormDOA {
 		//SQL statement and preparation
 		String sql = "UPDATE Form_Submissions SET  FULL_COST = ? WHERE FormID = ? ";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
-		pstmt.setInt(1, formID);
+		pstmt.setDouble(1, newCost);
+		pstmt.setInt(2, formID);
 
 		Savepoint s = conn.setSavepoint();
 		
 		int num = pstmt.executeUpdate();
 		
-		//Honestly I don't know why we do this or how we know to roll back here;
+		//If somehow I've changed more than one row, rollback
 		if (num > 1) {
 
 			conn.rollback(s);
+			log.warn("This should never happen: updated multiple rows on setFullCost method");
 		}
 		conn.commit();
 
@@ -112,19 +114,19 @@ public class FormImplementDOA implements FormDOA {
 	 * @param newCost New, full cost of reimbursement to be set
 	 * @return returns the value given to the database if successful, otherwise returns 0.0;
 	 */
-	public double setReimbursementCostOnFormID(Integer formID, Double newCost) throws SQLException {
+	public double setReimbursementCostOnFormID(int formID, Double newCost) throws SQLException {
 		if(newCost <= 0.0)
 		{
 			log.warn("Attempted to set Reimbursement amount to a zero or negative value");
 			return 0.0;
 		}
 		//SQL PREP, selects the percentage to calculate proper adjustment
-		String sql = "SELECT GRADE_PERCENT FROM Form_Submissions INNER JOIN GRADE_FORMAT ON Form_Subbmissions.GRADE_FORMAT_ID = GRADE_FORMAT.GRADEID WHERE formID = ?";
+		String sql = "SELECT GRADE_PERCENT FROM Form_Submissions INNER JOIN GRADE_FORMAT ON Form_Submissions.GRADE_FORMAT_ID = GRADE_FORMAT.GRADEID WHERE formID = ?";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		pstmt.setInt(1, formID);
 		ResultSet rs = pstmt.executeQuery();
 		double percentage;
-		double newValue = 0;
+		double newValue = 0.0;
 		if (rs.next()) {
 			// Convert to Full Cost
 			percentage = rs.getDouble(1);
@@ -139,7 +141,7 @@ public class FormImplementDOA implements FormDOA {
 		String sql2 = "UPDATE Form_Submissions SET FULL_COST = ? WHERE FormID = ? ";
 		PreparedStatement pstmt2 = conn.prepareStatement(sql);
 		pstmt.setDouble(1, newValue);
-		pstmt.setInt(1, formID);
+		pstmt.setInt(2, formID);
 
 		pstmt.executeUpdate();
 		return newValue;
