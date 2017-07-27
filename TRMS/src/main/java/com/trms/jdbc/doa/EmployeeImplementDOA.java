@@ -1,12 +1,11 @@
 package com.trms.jdbc.doa;
 
-import java.sql.SQLException;
-
-import com.trms.jdbc.util.ConnectionFactory;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import com.trms.jdbc.util.ConnectionFactory;
 
 public class EmployeeImplementDOA implements EmployeeDOA {
 
@@ -20,11 +19,10 @@ public class EmployeeImplementDOA implements EmployeeDOA {
 	}
 	
 	/* Returns the reimbursement value of the employee associated with 'employeeID'. */
-	public double getReimbursementBalance(int employeeID) throws SQLException {
+	public double getReimbursementBalance(int employeeID) throws Exception {
 		
 		//prepare sql statement
 		String sql = "select firstname, lastname, employeeid, reimbursement_total from employee where employeeid = ?";
-		
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		
 		pstmt.setInt(1, employeeID);
@@ -33,17 +31,25 @@ public class EmployeeImplementDOA implements EmployeeDOA {
 		ResultSet rs = pstmt.executeQuery();
 		
 		double balance = 0;
-		
+		System.out.println("jkl");
 		//store the balance into a double
-		while(rs.next()){
-		
-			balance = rs.getDouble(1);
-		
+		if(rs.next()){
+			
+			balance = rs.getDouble("REIMBURSEMENT_TOTAL");
+			System.out.println(balance);
+		}
+		else{
+			throw new Exception();
 		}
 		
 		//return the balance 
 		return balance;
 	}
+	
+	
+	
+	
+	
 	
 	//forgot how our table works for this one. maybe return a boolean of active inactive status??
 	public boolean cancelRequest(int requestID) throws SQLException {

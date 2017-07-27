@@ -2,11 +2,11 @@ package com.trms.jdbc.doa;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-
 import java.sql.Connection;
 import java.sql.SQLException;
 
 import org.apache.log4j.Logger;
+import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -16,16 +16,18 @@ import com.trms.jdbc.util.ConnectionFactory;
 public class EmployeeDOATest {
 	Logger logTest = Logger.getRootLogger();
 	static Connection conn = null;
+	static EmployeeImplementDOA doa = null;
 	//establishing a connection with the database
-	//before class has to be a methodgit
+	//before class has to be a method
 	@BeforeClass
-	public static void connSetup(){
+	public static void setup(){
 		conn = ConnectionFactory.getInstance().getConnection();
+		doa = new EmployeeImplementDOA();
+		
 	}
-	
-	
+		
 	//Fails if there IS a connection
-	@Test
+	@Test (expected = AssertionError.class)
 	public void testConnectionSuccess() throws SQLException{
 		logTest.debug("Testing the Connection Unit");
 		logTest.debug(conn.isClosed());
@@ -40,9 +42,21 @@ public class EmployeeDOATest {
 		assertFalse(conn.isClosed());
 	}
 
-	@Test
-	public void testGetReimbursementBalance(int employeeID) throws SQLException{
+
+	@Test (expected = Exception.class)
+	public void getReimbursementNegative() throws Exception{
 		logTest.debug("Testing getReimbursementBalance");
 		
+		doa.getReimbursementBalance(-1);
+	}	
+	@Test
+	public void testGetReimbursementBalanceSucces() throws Exception{
+		logTest.debug("Testing getReimbursementBalance");
+		System.out.println(doa.getReimbursementBalance(26));
+	}
+	
+	@AfterClass
+	public static void closout() throws SQLException{
+		conn.close();
 	}
 }
