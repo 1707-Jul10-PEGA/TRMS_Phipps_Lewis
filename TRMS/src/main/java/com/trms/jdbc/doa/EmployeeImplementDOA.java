@@ -18,7 +18,11 @@ public class EmployeeImplementDOA implements EmployeeDOA {
 		setup();
 	}
 	
-	/* Returns the reimbursement value of the employee associated with 'employeeID'. */
+	
+	/**
+	 * Gets the current Reimbursement balance of the Employee associated with employeeID.
+	 * @return Returns the amount in a double
+	 */
 	public double getReimbursementBalance(int employeeID) throws Exception {
 		
 		//prepare sql statement
@@ -51,7 +55,10 @@ public class EmployeeImplementDOA implements EmployeeDOA {
 	
 	
 	
-	//forgot how our table works for this one. maybe return a boolean of active inactive status??
+	/**
+	 * Cancels the pending reimbursement request associated with the 
+	 * @return void.
+	 */
 	public void cancelRequest(int requestID) throws Exception {
 		
 		if(requestID < 0){
@@ -59,7 +66,7 @@ public class EmployeeImplementDOA implements EmployeeDOA {
 		}
 		else{
 		//prepare sql statement						
-			String sql = "update form_submissions set status = -1 where formid = ?";
+			String sql = "update form_submissions set status = -1 where formid = ? and status != 5";
 		
 			PreparedStatement pstmt = conn.prepareStatement(sql);
 		
