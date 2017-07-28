@@ -42,8 +42,8 @@ public class FormImplementDOA implements FormDOA {
 		double percentage;
 		if (rs.next()) {
 			//Percentage is drawn from the GRADE_FORMAT table
-			totalCost = rs.getDouble(1);
-			percentage = rs.getDouble(2);
+			totalCost = rs.getDouble("Full_Cost");
+			percentage = rs.getDouble("Grade_Percent");
 			// Convert to actual reinbursement cost
 			totalCost = totalCost * percentage;
 		} else {
@@ -67,7 +67,7 @@ public class FormImplementDOA implements FormDOA {
 		double totalCost = 0;
 
 		if (rs.next()) {
-			totalCost = rs.getDouble(1);
+			totalCost = rs.getDouble("Full_Cost");
 		} else {
 			log.error("Failed to locate a form with that ID Returning 0.");
 		}
