@@ -33,13 +33,13 @@ hs_err_pid*
 *logs/
 *.iml
 /bin/
-/Servers/
+*/Servers/*
 */target/*
-/RemoteSystemsTempFiles/
+*/RemoteSystemsTempFiles/*
 /External Files/
 TRMS/target/m2e-wtp/web-resources/META-INF/maven/com.TRMS.WW/TRMS/pom.properties
 TRMS/target/m2e-wtp/web-resources/META-INF/MANIFEST.MF
-/htmlLayout.html
+*/htmlLayout.html
 
 .idea
 *.idea
