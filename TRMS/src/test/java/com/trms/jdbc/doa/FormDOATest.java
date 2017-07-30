@@ -46,6 +46,22 @@ public class FormDOATest {
 		assertTrue("Ensure output matches on full cost valid input", formDOA.setFullCostOnFormID(1, 200.00) == 200.00);
 		assertFalse("Ensure output is valid on conversion input", formDOA.setReimbursementCostOnFormID(1, 200.00) == 200.00);
 	}
+	@Test
+	public void testSubmitReimbursementRequest() throws SQLException{
+		assertTrue("Ensure check for negative cost form", formDOA.submitReimbursementRequest(1, -200, 4, "Just a test") == -1);
+		assertTrue("Ensure check non Existant gradescale ", formDOA.submitReimbursementRequest(1, 200, 0, "Just a test") == 0);
+		assertTrue("Ensure check for non existant gradescale form", formDOA.submitReimbursementRequest(1, 200, 7, "Just a test") == 7);
+		assertFalse("Check working gradescale and cost", formDOA.submitReimbursementRequest(1, 200, 6, "Just a test") == 6);
+		
+	}
+	@Test 
+	void testcheckGradeOnFormID() throws SQLException{
+		assertTrue("Ensure grade is a positive value", formDOA.checkGradeOnFormID(1) > 0);
+	}
+	@Test 
+	void increaseApprovalLevelOnFormID() throws SQLException{
+		//No tests for this method.
+	}
 
 
 

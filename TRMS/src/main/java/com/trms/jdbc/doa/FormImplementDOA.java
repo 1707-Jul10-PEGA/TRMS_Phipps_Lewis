@@ -159,6 +159,16 @@ public class FormImplementDOA implements FormDOA {
 	 */
 	//Should this method check for a usable EmployeeID?
 	public int submitReimbursementRequest(int empId, double fullCost, int gradeFormatID, String description) throws SQLException{
+		if(fullCost <= 0.0)
+		{
+			log.warn("Attempted to set Reimbursement amount to a zero or negative value, you attempted to enter: "+ fullCost);
+			return -1;
+		}
+		if(!(0 < gradeFormatID && gradeFormatID < 7))
+		{
+			log.warn("No such gradeFormatID, please enter a value in the range of 1-6, you attempted to input: " + gradeFormatID);
+			return gradeFormatID;
+		}
 		
 		String sql = "INSERT INTO FORM_SUBMISSION (FormID, EmployeeID, Date_Made, Full_Cost, Grade_Format_ID, Grade_Score, Description, Status)"
 				+ " VALUES (1, ?, CURRENT_TIMESTAMP, ?, ?, -1, ?, 1)";
@@ -210,7 +220,7 @@ public class FormImplementDOA implements FormDOA {
 	 * @throws SQLException
 	 */
 	
-	public String approveGradeOnFormID(int formID) throws SQLException{
+	public String increaseApprovalLevelOnFormID(int formID) throws SQLException{
 		
 		//Selecting the current status, extraInfo is used if we attempt to increase approval level above max
 		String extraInfo = "";
