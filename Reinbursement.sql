@@ -64,6 +64,7 @@ CREATE TABLE Form_Submissions
   Date_Made DATE,
   Full_Cost number,
   Grade_Format_ID number,   -- Ask Nick if Grade format reference table is provided
+  Grade_Score number,
   Descript varchar2(3999),
   Status number
 );
@@ -154,7 +155,7 @@ INSERT INTO Employee (EmployeeID, firstName, lastName, userName, pass, Reimburse
 INSERT INTO Employee (EmployeeID, firstName, lastName, userName, pass, Reimbursement_total, Direct_Supervisor, DepartmentID) VALUES (4, 'Benco', 'regularBEN', 'Benco', 'pass', 1000, null, 2);
 
 
-INSERT INTO FORM_SUBMISSIONS (FormID, EmployeeID, Date_Made, Full_Cost, Grade_Format_ID, Descript, Status) VALUES (1, 1, CURRENT_TIMESTAMP, 200, null, 'Testing', 1);
+INSERT INTO FORM_SUBMISSIONS (FormID, EmployeeID, Date_Made, Full_Cost, Grade_Format_ID, Grade_Score, Descript, Status) VALUES (1, 1, CURRENT_TIMESTAMP, 200, null, null, 'Testing', 1);
 
 INSERT INTO Approval_Status (StatusID, Descript) VALUES (-1, 'Request Canceled');
 INSERT INTO Approval_Status (StatusID, Descript) VALUES (0, 'Request Denied');

@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Savepoint;
+import java.sql.Statement;
 
 import org.apache.log4j.Logger;
 
@@ -146,5 +147,121 @@ public class FormImplementDOA implements FormDOA {
 		pstmt.executeUpdate();
 		return newValue;
 	}
+	
+	/**
+	 * As Employeee can submit reimbursement
+	 * @param EmpId
+	 * @param fullCost
+	 * @param gradeFormatID
+	 * @param description
+	 * @return
+	 * @throws SQLException
+	 */
+	//Should this method check for a usable EmployeeID?
+	public int submitReimbursementRequest(int empId, double fullCost, int gradeFormatID, String description) throws SQLException{
+		
+		String sql = "INSERT INTO FORM_SUBMISSION (FormID, EmployeeID, Date_Made, Full_Cost, Grade_Format_ID, Grade_Score, Description, Status)"
+				+ " VALUES (1, ?, CURRENT_TIMESTAMP, ?, ?, -1, ?, 1)";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setInt(1, empId);
+		pstmt.setDouble(2, fullCost);
+		pstmt.setInt(3, gradeFormatID);
+		pstmt.setString(4, description);
+		
+		pstmt.executeUpdate(sql, PreparedStatement.RETURN_GENERATED_KEYS);
+		ResultSet rs = pstmt.getGeneratedKeys();
+		int formID = rs.getInt(1);	
+		return formID;
+	
+		
+	}
+	
+	 //as X can access a grade (0 or 1 on pass or fail for now; Grade_Score
 
+	public int checkGradeOnFormID(int formID) throws SQLException{
+		
+		
+		String sql = "SELECT Grade_Score FROM FORM_SUBMISSION WHERE FormID = ?";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setInt(1, formID);
+		
+		ResultSet rs = pstmt.executeQuery();
+		int gradeScore = -1;
+		if(rs.next())
+		{
+			gradeScore = rs.getInt(1);
+			if(rs.wasNull())
+			{
+				log.error("This Submission has no grade score");
+				gradeScore = -1;
+			}
+		}
+		else
+		{
+		 log.error("No such column found");	
+		}
+		
+		return gradeScore;
+	}
+	/**
+	 * 
+	 * @param formID
+	 * @return
+	 * @throws SQLException
+	 */
+	
+	public String approveGradeOnFormID(int formID) throws SQLException{
+		
+		//Selecting the current status, extraInfo is used if we attempt to increase approval level above max
+		String extraInfo = "";
+		String statusLevel = "This function has failed, please check the FormDOA";
+		String sql = "SELECT STATUS FROM FORM_SUBMISSION WHERE FormID = ?";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setInt(1, formID);
+		
+		ResultSet rs = pstmt.executeQuery();
+		if(rs.next())
+		{
+			//If the current status is successfully selected, grab it
+			int myApprovalLevel = rs.getInt(1);
+			
+			//Update form submission approval level to be one higher
+			String sql2 = "UPDATE FORM_SUBMISSION SET STATUS = ? WHERE FormID = ? ";
+			PreparedStatement pstmt2 = conn.prepareStatement(sql2);
+			//Check that we don't go over our highest approval level
+			if(myApprovalLevel < 5 )
+			{
+				pstmt2.setInt(1, (myApprovalLevel+1));
+				myApprovalLevel++;
+				log.info("New Approval level is: " + myApprovalLevel);
+			}
+			else
+			{
+				//If we are at max approval keep the value and let the user know;
+				pstmt2.setInt(1, myApprovalLevel);
+				log.info("Submission already at maximum approval level:" + myApprovalLevel);
+				//Extra Info should no longer be the empty string, so we can let the caller of this method know they were already at full approval.
+				extraInfo = " This form has already been fully approved for reimbursement!";
+			}
+			pstmt2.setInt(2, formID);
+			int rs2 = pstmt2.executeUpdate();
+			
+			//Now grab relevant description of the approval level to pass to the method caller
+			String sql3 = "SELECT Descript FROM APPROVAL_STATUS WHERE StatusID = ?";
+			PreparedStatement pstmt3 = conn.prepareStatement(sql);
+			pstmt2.setInt(1, myApprovalLevel);
+			
+			ResultSet rs3 = pstmt3.executeQuery();
+			if(rs3.next())
+			{
+				statusLevel = rs3.getString("Descript");
+			}
+		}
+		
+		
+		return statusLevel+extraInfo;
+		
+	}
+	
+	
 }
