@@ -34,7 +34,7 @@ hs_err_pid*
 *logs/
 *.iml
 /bin/
-/Servers/
+*/Servers/*
 /target/
 /RemoteSystemsTempFiles/
 /External Files/
