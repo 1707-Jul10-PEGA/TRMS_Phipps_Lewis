@@ -13,6 +13,9 @@ import javax.servlet.http.HttpServletResponse;
 import com.trms.jdbc.doa.EmployeeImplementDOA;
 import com.trms.jdbc.doa.FormImplementDOA;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 public class VerifyLogin extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     
@@ -46,10 +49,18 @@ public class VerifyLogin extends HttpServlet {
 		}
 		
 		System.out.println("Your UserID is: " + test);
+		ObjectMapper om = new ObjectMapper();
+    	String blakeString = null;
+    	try {
+			blakeString = om.writeValueAsString(test);
+		} catch (JsonProcessingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		//RequestDispatcher rd = request.getRequestDispatcher("login.html");
 		
-    	response.getWriter().write(" " +test);
+    	response.getWriter().write(blakeString);
 		//response.sendRedirect("login.html");
 	}
 	
