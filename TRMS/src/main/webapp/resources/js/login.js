@@ -28,8 +28,8 @@ function handleEvent(){
 		case 4:
 			if(xhr.status == 200){
 				
-				var Employee = xhr.responseText;
-				document.getElementById("stuff").innerHTML = Employee;
+				test = xhr.responseText;
+				document.getElementById("stuff").innerHTML = test;
 				head.innerHTML = "Success";
 				
 			}
