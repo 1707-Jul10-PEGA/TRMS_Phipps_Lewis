@@ -75,5 +75,24 @@ public class EmployeeImplementDOA implements EmployeeDOA {
 			pstmt.executeQuery();
 		}
 	}
+	
+	public int getEmployeeIDOnLoginInfo(String username, String password) throws SQLException{
+		int myEmpID = -1;
+		String sql = "SELECT EmployeeID FROM Employee WHERE Username = ? AND Pass = ?";
+		
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		
+		pstmt.setString(1, username);
+		pstmt.setString(2, password);
+		
+		ResultSet rs = pstmt.executeQuery();
+		
+		if(rs.next())
+		{
+			myEmpID = rs.getInt(1);
+		}
+		
+		return myEmpID;
+	}
 
 }
