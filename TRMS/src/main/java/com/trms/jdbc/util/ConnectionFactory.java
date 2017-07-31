@@ -33,6 +33,8 @@ public class ConnectionFactory{
 			try{
 			
 			prop.load(new FileReader("./datasource.properties"));
+			//TRMS/src/main/webapp/datasource.properties
+			//./datasource.properties
 																					
 		} catch(IOException e1){
 			e1.printStackTrace();

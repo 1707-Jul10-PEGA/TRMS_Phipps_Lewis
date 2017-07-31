@@ -8,7 +8,8 @@ public class Driver {
 	public static void main(String[] args) throws Exception {
 		EmployeeImplementDOA doa = new EmployeeImplementDOA();
 		
-		System.out.println(doa.getReimbursementBalance(26));
+		int joe = doa.getEmployeeIDOnLoginInfo("DH", "pass");
+		System.out.println(joe);
 		
 	}
 }
