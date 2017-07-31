@@ -28,7 +28,7 @@ function handleEvent(){
 		case 4:
 			if(xhr.status == 200){
 				
-				test = xhr.responseText;
+				var test = xhr.responseText;
 				document.getElementById("stuff").innerHTML = test;
 				head.innerHTML = "Success";
 				
