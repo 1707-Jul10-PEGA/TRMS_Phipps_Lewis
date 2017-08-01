@@ -1,4 +1,4 @@
-/*******************************************************************************
+
    Reinbursement Requests
    Script: TRMS.sql
    Description: Creates and populates the TRMS Database
