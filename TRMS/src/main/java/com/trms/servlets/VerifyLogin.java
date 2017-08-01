@@ -51,15 +51,15 @@ public class VerifyLogin extends HttpServlet {
 		System.out.println("Your UserID is: " + test);
 		
 		response.getWriter().write(test);
-		if(test > 0){
-		
-			response.sendRedirect("home.html");
-			
-		}
-		else {
-			
-			response.sendRedirect("login.html");
-		}
+//		if(test > 0){
+//		
+//			response.sendRedirect("home.html");
+//			
+//		}
+//		else {
+//			
+//			response.sendRedirect("login.html");
+//		}
 		//request.setAttribute("username", us);
 		//request.setAttribute("password", pass);
 	}
