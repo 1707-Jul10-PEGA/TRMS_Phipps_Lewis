@@ -41,9 +41,14 @@ public class GetReimbursement extends HttpServlet {
 		// TODO Auto-generated method stub
 		System.out.println("Hi there");
 		EmployeeImplementDOA newDOA =  new EmployeeImplementDOA();
+		System.out.println(request.getParameter("id"));
+		//System.out.println(request.getParameter("stuff"));
+		
+		
+		int myID = Integer.parseInt(request.getParameter("id"));
 		double test = -1.0;
 			try {
-				test = newDOA.getReimbursementBalance(3);
+				test = newDOA.getReimbursementBalance(myID);
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
