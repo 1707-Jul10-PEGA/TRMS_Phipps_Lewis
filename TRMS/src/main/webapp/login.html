@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<script type="text/javascript src="jquery-3.2.1.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <link rel="stylesheet" href="resources/css/login.css">
 <link rel="stylesheet" href="resources/css/bootstrap.min.css">
 <title>Test</title>
@@ -14,16 +14,16 @@
 		<h1 id="head">Connection Status will Update here</h1>
 	</div>
 
-	<form action="VerifyLogin">
+	
 		<div class="container">
 			<label><b>Username</b></label> <input type="text"
-				placeholder="Enter Username" name="uname" required> <label><b>Password</b></label>
-			<input type="password" placeholder="Enter Password" name="psw" required>
+				placeholder="Enter Username" id="uname" required> <label><b>Password</b></label>
+			<input type="password" placeholder="Enter Password" id="psw" required>
 
-			<button type="submit" id="login">Login</button>
+			<button id="login">Login</button>
 
 		</div>
-	</form>
+	
 	<h1 id="stuff">Testing things here</h1>
 
 	<script type="text/javascript" src="resources/js/login.js"></script>
