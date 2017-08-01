@@ -49,19 +49,19 @@ public class VerifyLogin extends HttpServlet {
 		}
 		
 		System.out.println("Your UserID is: " + test);
-		ObjectMapper om = new ObjectMapper();
-    	String blakeString = null;
-    	try {
-			blakeString = om.writeValueAsString(test);
-		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		
+		response.getWriter().write(test);
+		if(test > 0){
+		
+			response.sendRedirect("home.html");
+			
 		}
-		
-		//RequestDispatcher rd = request.getRequestDispatcher("login.html");
-		
-    	response.getWriter().write(blakeString);
-		//response.sendRedirect("login.html");
+		else {
+			
+			response.sendRedirect("login.html");
+		}
+		//request.setAttribute("username", us);
+		//request.setAttribute("password", pass);
 	}
 	
 

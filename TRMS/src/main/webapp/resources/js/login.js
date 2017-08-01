@@ -37,7 +37,7 @@ function handleEvent(){
 			else{
 				
 				head.innerHTML = "ERROR with Request, response code: " + xhr.status;
-				document.getElementById("stuff").innerHTML = " Hi " + xhr.status;
+				document.getElementById("login").innerHTML = " Hi " + xhr.status;
 				
 			}
 			break;
@@ -48,6 +48,7 @@ function handleEvent(){
 	
 	xhr.open("GET", "/VerifyLogin", true);
 	xhr.send();
+	
 	
 }
 function postIt(){
