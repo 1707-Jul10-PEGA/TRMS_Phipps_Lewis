@@ -23,7 +23,7 @@ public class EmployeeImplementDOA implements EmployeeDOA {
 	 * Gets the current Reimbursement balance of the Employee associated with employeeID.
 	 * @return Returns the amount in a double
 	 */
-	public double getReimbursementBalance(int employeeID) throws Exception {
+	public double getReimbursementBalance(int employeeID) throws SQLException {
 		
 		//prepare sql statement
 		String sql = "select firstname, lastname, employeeid, reimbursement_total from employee where employeeid = ?";
@@ -43,7 +43,7 @@ public class EmployeeImplementDOA implements EmployeeDOA {
 			System.out.println(balance);
 		}
 		else{
-			throw new Exception();
+			throw new SQLException();
 		}
 		
 		//return the balance 
@@ -59,10 +59,10 @@ public class EmployeeImplementDOA implements EmployeeDOA {
 	 * Cancels the pending reimbursement request associated with the 
 	 * @return void.
 	 */
-	public void cancelRequest(int requestID) throws Exception {
+	public void cancelRequest(int requestID) throws SQLException {
 		
 		if(requestID < 0){
-			throw new Exception();
+			throw new SQLException();
 		}
 		else{
 		//prepare sql statement						
