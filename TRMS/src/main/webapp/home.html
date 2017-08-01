@@ -2,13 +2,41 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<link rel="stylesheet" href="resources/css/login.css">
+<link rel="stylesheet" href="resources/css/bootstrap.min.css">
+<title>Test</title>
 </head>
 <body>
-	<h1>Hello there, this page will have stuff!</h1>
+	<div class="jumbotron text-center">
+		<h1>Welome!</h1>
+		<p>You are a ___</p>
+		<h1 id="head">Happ Birthday</h1>
+	</div>
 	
-	
-	<script type="text/javascript" src="resources/js/home.js"></script>
 
+	<h1 id="homeFormHeader">Please Select an Option</h1>
+
+	<form action="VerifyLogin">
+		<div class="container">
+			
+			<label><b>Username</b></label>
+			
+				<input type="text" placeholder="Enter Username" name="uname" required>
+			
+			<label><b>Password</b></label>
+			
+				<input type="password" placeholder="Enter Password" name="psw" required>
+
+			<button type="submit" id="login">Login</button>
+
+		</div>
+	</form>
+	
+
+	<script type="text/javascript" src="resources/js/home.js"></script>
 </body>
 </html>
+
+
+	
+

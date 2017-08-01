@@ -30,40 +30,29 @@ public class VerifyLogin extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-		System.out.println("YO IM HERE");
-
-		
-		String us = request.getParameter("uname");
-		String pass = request.getParameter("psw");
-		System.out.println(us + " " + pass);
-		EmployeeImplementDOA newDOA =  new EmployeeImplementDOA();
-		int test = -1;
-		try {
-			test = newDOA.getEmployeeIDOnLoginInfo(us, pass);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			System.out.println("Failed");
-			e.printStackTrace();
-		}
-		
-		System.out.println("Your UserID is: " + test);
-		ObjectMapper om = new ObjectMapper();
-    	String blakeString = null;
-    	try {
-			blakeString = om.writeValueAsString(test);
-		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		//RequestDispatcher rd = request.getRequestDispatcher("login.html");
-		
-    	response.getWriter().write(blakeString);
-		//response.sendRedirect("login.html");
-	}
-	
+//	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+//
+//		System.out.println("YO IM HERE");
+//
+//		
+//		String us = request.getParameter("uname");
+//		String pass = request.getParameter("psw");
+//		System.out.println(us + " " + pass);
+//		EmployeeImplementDOA newDOA =  new EmployeeImplementDOA();
+//		int test = -1;
+//		try {
+//			test = newDOA.getEmployeeIDOnLoginInfo(us, pass);
+//		} catch (SQLException e) {
+//			// TODO Auto-generated catch block
+//			System.out.println("Failed");
+//			e.printStackTrace();
+//		}
+//		
+//		System.out.println("Your UserID is: " + test);
+//		
+//		response.getWriter().append(test + "");
+//	}
+//	
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
@@ -71,29 +60,25 @@ public class VerifyLogin extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		System.out.println("Made it here!");
+
+
+	String us = request.getParameter("username");
+	String pass = request.getParameter("password");
+	System.out.println(us + " " + pass);
+	EmployeeImplementDOA newDOA =  new EmployeeImplementDOA();
+	int test = -1;
+	try {
+		test = newDOA.getEmployeeIDOnLoginInfo(us, pass);
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		System.out.println("Failed");
+		e.printStackTrace();
 	}
-
-	/**
-	 * 	System.out.println("YO IM HERE");
-
-		
-		String us = request.getParameter("uname");
-		String pass = request.getParameter("psw");
-		System.out.println(us + " " + pass);
-		EmployeeImplementDOA newDOA =  new EmployeeImplementDOA();
-		int test = -1;
-		try {
-			test = newDOA.getEmployeeIDOnLoginInfo(us, pass);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			System.out.println("Failed");
-			e.printStackTrace();
-		}
-		
-		System.out.println("Your UserID is: " + test);
-		
-    	response.getWriter().write(test);
-		response.sendRedirect("login.html");
-	 */
-
+	
+	System.out.println("Your UserID is: " + test);
+	
+	response.getWriter().append(test + "");
+}
+	
+	
 }
