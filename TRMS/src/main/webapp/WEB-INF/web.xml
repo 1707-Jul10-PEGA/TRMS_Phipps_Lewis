@@ -21,4 +21,14 @@
     <servlet-name>GetReimbursement</servlet-name>
     <url-pattern>/GetReimbursement</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>GetFormServlet</display-name>
+    <servlet-name>GetFormServlet</servlet-name>
+    <servlet-class>com.trms.servlets.GetFormServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GetFormServlet</servlet-name>
+    <url-pattern>/GetFormServlet</url-pattern>
+  </servlet-mapping>
 </web-app>
