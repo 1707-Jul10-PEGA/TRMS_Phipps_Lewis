@@ -32,13 +32,16 @@ public class ConnectionFactory{
 
 			try{
 			
-			prop.load(new FileReader("./datasource.properties"));
+			prop.load(new FileReader("C:\\Users\\William\\TRMSClone\\TRMS_Phipps_Lewis\\TRMS\\src\\main\\resources\\datasource.properties"));
+			//TRMS/src/main/webapp/datasource.properties
+			//./datasource.properties
 																					
 		} catch(IOException e1){
 			e1.printStackTrace();
 			log.debug("Failed to read Props file");}
 		
 		try{
+			Class.forName("oracle.jdbc.driver.OracleDriver");
 			conn = DriverManager.getConnection(
 					prop.getProperty("url"),
 					prop.getProperty("username"), 
@@ -46,6 +49,9 @@ public class ConnectionFactory{
 			log.debug("Read URL and login");
 		} catch(SQLException e){
 			log.debug("Faild to read url username or password for database");
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return conn;
