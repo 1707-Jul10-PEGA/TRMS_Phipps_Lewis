@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
   <display-name>TRMS</display-name>
-
   <servlet>
     <description></description>
     <display-name>VerifyLogin</display-name>
@@ -11,5 +10,15 @@
   <servlet-mapping>
     <servlet-name>VerifyLogin</servlet-name>
     <url-pattern>/VerifyLogin</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>GetReimbursement</display-name>
+    <servlet-name>GetReimbursement</servlet-name>
+    <servlet-class>com.trms.servlets.GetReimbursement</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GetReimbursement</servlet-name>
+    <url-pattern>/GetReimbursement</url-pattern>
   </servlet-mapping>
 </web-app>
