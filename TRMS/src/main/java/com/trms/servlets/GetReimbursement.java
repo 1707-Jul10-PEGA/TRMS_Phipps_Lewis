@@ -51,6 +51,8 @@ public class GetReimbursement extends HttpServlet {
 			System.out.println(test);
 			HttpSession session = request.getSession();
 			session.setAttribute("Your balance: ", test);
+			
+			response.getWriter().append(test+ " ");
 	
 	}
 
