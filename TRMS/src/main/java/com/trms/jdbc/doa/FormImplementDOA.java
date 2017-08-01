@@ -5,7 +5,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Savepoint;
-import java.sql.Statement;
 
 import org.apache.log4j.Logger;
 
@@ -51,6 +50,33 @@ public class FormImplementDOA implements FormDOA {
 			log.error("Failed to locate a form with that ID. Returning 0.");
 		}
 		return totalCost;
+	}
+	/**
+	 * 
+	 * @param formID
+	 * @return Returns the string representation of the form(s) associated with the id
+	 * @throws SQLEXception
+	 */
+	public String getFormsOnEmpID(int empID) throws SQLException{
+		String output = "";
+		
+		String sql = "select employee.firstname, employee.lastname, form_submissions.date_made, form_submissions.status, form_submissions.grade_score from employee inner join form_submissions on employee.employeeid = form_submissions.employeeid where employee.employeeid = ?";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setInt(1, empID);
+		
+		ResultSet rs = pstmt.executeQuery();
+		while(rs.next()){
+			output = output + rs.getString("firstname");
+			output = output + ";" + rs.getString("lastname");
+			output = output + ";" + rs.getString("date_made");
+			output = output + ";" + rs.getString("status");
+			output = output + ";" + rs.getString("grade_score");
+			
+		}
+		
+		return output;
+		
+		
 	}
 
 	/**
