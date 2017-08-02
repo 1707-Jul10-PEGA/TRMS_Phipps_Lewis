@@ -30,6 +30,8 @@
   <servlet-mapping>
     <servlet-name>SubmitForm</servlet-name>
     <url-pattern>/SubmitForm</url-pattern>
+  </servlet-mapping>
+  <servlet>
     <display-name>GetFormServlet</display-name>
     <servlet-name>GetFormServlet</servlet-name>
     <servlet-class>com.trms.servlets.GetFormServlet</servlet-class>
@@ -37,5 +39,15 @@
   <servlet-mapping>
     <servlet-name>GetFormServlet</servlet-name>
     <url-pattern>/GetFormServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>AllFormsServlet</display-name>
+    <servlet-name>AllFormsServlet</servlet-name>
+    <servlet-class>com.trms.servlets.AllFormsServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AllFormsServlet</servlet-name>
+    <url-pattern>/AllFormsServlet</url-pattern>
   </servlet-mapping>
 </web-app>
