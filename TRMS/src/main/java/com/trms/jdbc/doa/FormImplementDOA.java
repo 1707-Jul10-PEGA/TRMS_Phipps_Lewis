@@ -184,19 +184,19 @@ public class FormImplementDOA implements FormDOA {
 	 * @throws SQLException
 	 */
 	//Should this method check for a usable EmployeeID?
-	public int submitReimbursementRequest(int empId, double fullCost, int gradeFormatID, String description) throws SQLException{
+	public void submitReimbursementRequest(int empId, double fullCost, int gradeFormatID, String description) throws SQLException{
 		if(fullCost <= 0.0)
 		{
 			log.warn("Attempted to set Reimbursement amount to a zero or negative value, you attempted to enter: "+ fullCost);
-			return -1;
+			return;
 		}
 		if(!(0 < gradeFormatID && gradeFormatID < 7))
 		{
 			log.warn("No such gradeFormatID, please enter a value in the range of 1-6, you attempted to input: " + gradeFormatID);
-			return gradeFormatID;
+			return;
 		}
 		
-		String sql = "INSERT INTO FORM_SUBMISSION (FormID, EmployeeID, Date_Made, Full_Cost, Grade_Format_ID, Grade_Score, Description, Status)"
+		String sql = "INSERT INTO FORM_SUBMISSIONS (FormID, EmployeeID, Date_Made, Full_Cost, Grade_Format_ID, Grade_Score, Descript, Status)"
 				+ " VALUES (1, ?, CURRENT_TIMESTAMP, ?, ?, -1, ?, 1)";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		pstmt.setInt(1, empId);
@@ -204,10 +204,8 @@ public class FormImplementDOA implements FormDOA {
 		pstmt.setInt(3, gradeFormatID);
 		pstmt.setString(4, description);
 		
-		pstmt.executeUpdate(sql, PreparedStatement.RETURN_GENERATED_KEYS);
-		ResultSet rs = pstmt.getGeneratedKeys();
-		int formID = rs.getInt(1);	
-		return formID;
+		pstmt.execute();
+		return;
 	
 		
 	}

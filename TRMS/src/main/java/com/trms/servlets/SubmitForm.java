@@ -31,9 +31,7 @@ public class SubmitForm extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		System.out.println("In doGet!");
-
-		response.sendRedirect("employee.html");
+		
 	}
 
 	/**
@@ -48,7 +46,7 @@ public class SubmitForm extends HttpServlet {
 		Double myCost = Double.parseDouble(request.getParameter("cost"));
 		String myType = request.getParameter("grade");
 		Integer myID = (Integer) request.getSession().getAttribute("ID");
-		int myGrade;
+		int myGrade = 1;
 		System.out.println(myCost + " " + myType);
 		switch (myType) {
 		case "University Course":
