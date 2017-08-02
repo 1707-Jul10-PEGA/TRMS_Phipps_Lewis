@@ -39,13 +39,12 @@ public class GetReimbursement extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		System.out.println("Hi there");
+	//	System.out.println("Hi there");
 		EmployeeImplementDOA newDOA =  new EmployeeImplementDOA();
-		System.out.println(request.getParameter("id"));
+	//	System.out.println(request.getParameter("id"));
 		//System.out.println(request.getParameter("stuff"));
-		
-		
-		int myID = Integer.parseInt(request.getParameter("id"));
+		//System.out.println("Your UserID in Employee is: " + request.getSession().getAttribute("ID"));
+		Integer myID = (Integer) request.getSession().getAttribute("ID");
 		double test = -1.0;
 			try {
 				test = newDOA.getReimbursementBalance(myID);
