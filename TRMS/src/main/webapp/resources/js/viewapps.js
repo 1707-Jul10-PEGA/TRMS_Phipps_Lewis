@@ -1,34 +1,45 @@
 $(document).ready(function() {
 	
 	$.post("GetFormServlet", function (data) {
-		var tr;
-		for(var i = 0; i < data.length; i++){
-			tr = $('<tr/>');
-			tr.append("<td>" + data[i].firstname + "</td>");
-			tr.append("<td>" + data[i].lastname + "</td>");
-			tr.append("<td>" + data[i].date_made + "</td>");
-			tr.append("<td>" + data[i].status + "</td>");
-			tr.append("<td>" + data[i].grade_score + "</td>");
-			$('myappstable').append(tr);
-			
-		 	
-		}
 		
-		var splitter = data.split(";");
-		splitter
+		var splitter = "";
+		splitter = data.split(";");
+
 		var tr;
 		tr = $('<tr/>');
-		for(var i = 0; i < splitter.length; i++){
-			tr.append("<td>" + splitter[i + 1]+ "</td>");
+		for(var x = 0; x < (splitter.length / 5); x++) {
+			//tr.append("<tr/>");
+			for(var i = 0; i < splitter.length; i++){
+				tr.append("<td>" + splitter[i] + "</td>");
+			}
+			tr.append("<tr/>");
 		}
+
 		
 		$('#myappstable').append(tr);
-		window.alert(data);
-
-		window.alert(data.split(";")[1]);
+		
+		
+	
 	});
 	
+	$.post("AllFormsServlet", function (data) {
+		
+		var splitter = "";
+		splitter = data.split(";");
+
+		var tr;
+		tr = $('<tr/>');
+		//or(var x = 0; x < (splitter.length / 5); x++) {
+			//tr.append("<tr/>");
+			//for(var i = 0; i < splitter.length; i++){
+				tr.append("<tr><td>" + splitter[0] + "</td><td>" + splitter[1] + "</td><td>" + splitter[2] + "</td><td>" + splitter[3] + "</td><td>" + splitter[4] + "</td>");
+				tr.append("<tr/>");
+			//}
+			tr.append("<tr/>");
+		//}
+		$('#allappstable').append(tr);
 	
+	});
 	
 	
 });

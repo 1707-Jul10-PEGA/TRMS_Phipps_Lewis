@@ -1,5 +1,6 @@
 package com.trms.jdbc.doa;
 
+import java.sql.Statement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -70,12 +71,31 @@ public class FormImplementDOA implements FormDOA {
 			output = output + ";" + rs.getString("lastname");
 			output = output + ";" + rs.getString("date_made");
 			output = output + ";" + rs.getString("status");
-			output = output + ";" + rs.getString("grade_score");
+			output = output + ";" + rs.getString("grade_score") + ";";
 			
 		}
 		
 		return output;
 		
+		
+	}
+	public String getAllForms() throws SQLException {
+		String output = "";
+		
+		String sql = "select employee.firstname, employee.lastname, form_submissions.date_made, form_submissions.status, form_submissions.grade_score from employee inner join form_submissions on employee.employeeid = form_submissions.employeeid";
+		Statement stmt = conn.createStatement();
+		
+		ResultSet rs = stmt.executeQuery(sql);
+		while(rs.next()){
+			output = output + rs.getString("firstname");
+			output = output + ";" + rs.getString("lastname");
+			output = output + ";" + rs.getString("date_made");
+			output = output + ";" + rs.getString("status");
+			output = output + ";" + rs.getString("grade_score") + ";";
+			
+		}
+		
+		return output;
 		
 	}
 
