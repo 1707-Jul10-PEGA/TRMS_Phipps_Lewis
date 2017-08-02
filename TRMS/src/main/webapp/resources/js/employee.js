@@ -1,7 +1,7 @@
 $(document).ready(function() {
 	$("#balanceGet").click(function(){
 
-		$.post( "GetReimbursement",{id: $('#empID').val(),stuff: "stuff=myInfo"}, function( data ) {
+		$.post( "GetReimbursement", function( data ) {
 			  $( "#balanceResult" ).html( data );
 			});
 	});

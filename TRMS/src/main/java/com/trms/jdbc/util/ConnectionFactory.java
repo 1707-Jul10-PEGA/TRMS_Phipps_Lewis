@@ -32,9 +32,10 @@ public class ConnectionFactory{
 
 			try{
 			
-			prop.load(new FileReader("C:\\Users\\WD\\Documents\\GitHub\\Hope\\TRMS_Phipps_Lewis\\TRMS\\src\\main\\resources\\datasource.properties"));
+			prop.load(new FileReader("C:\\Users\\William\\TRMSClone\\TRMS_Phipps_Lewis\\TRMS\\src\\main\\resources\\datasource.properties"));
 			//TRMS/src/main/webapp/datasource.properties
 			//./datasource.properties
+			//C:\Users\William\TRMSClone\TRMS_Phipps_Lewis\TRMS\src\main\resources
 																					
 		} catch(IOException e1){
 			e1.printStackTrace();

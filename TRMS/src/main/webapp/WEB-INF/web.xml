@@ -31,7 +31,7 @@
     <servlet-name>SubmitForm</servlet-name>
     <url-pattern>/SubmitForm</url-pattern>
   </servlet-mapping>
-  <servlet>
+  <servlet> 
     <display-name>GetFormServlet</display-name>
     <servlet-name>GetFormServlet</servlet-name>
     <servlet-class>com.trms.servlets.GetFormServlet</servlet-class>
