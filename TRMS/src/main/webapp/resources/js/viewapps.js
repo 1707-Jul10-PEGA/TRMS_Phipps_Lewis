@@ -1,45 +1,38 @@
 $(document).ready(function() {
-	
 	$.post("GetFormServlet", function (data) {
+		form = JSON.parse(data);
 		
-		var splitter = "";
-		splitter = data.split(";");
-
+		for(var i = 0; i < form.length ; i++){
 		var tr;
 		tr = $('<tr/>');
-		for(var x = 0; x < (splitter.length / 5); x++) {
-			//tr.append("<tr/>");
-			for(var i = 0; i < splitter.length; i++){
-				tr.append("<td>" + splitter[i] + "</td>");
-			}
-			tr.append("<tr/>");
-		}
-
+		tr.append("<td>" + form[i].firstName + "</td>");
+		tr.append("<td>" + form[i].lastName + "</td>");
+		tr.append("<td>" + form[i].date + "</td>");
+		tr.append("<td>" + form[i].status + "</td>");
+		tr.append("<td>" + form[i].gradeFormat + "</td>");
+		tr.append("<tr/>")
+		
 		
 		$('#myappstable').append(tr);
-		
-		
-	
+		}
 	});
 	
 	$.post("AllFormsServlet", function (data) {
+		forms = JSON.parse(data);
 		
-		var splitter = "";
-		splitter = data.split(";");
-
+		for(var i = 0; i < forms.length ; i++){
 		var tr;
 		tr = $('<tr/>');
-		//or(var x = 0; x < (splitter.length / 5); x++) {
-			//tr.append("<tr/>");
-			//for(var i = 0; i < splitter.length; i++){
-				tr.append("<tr><td>" + splitter[0] + "</td><td>" + splitter[1] + "</td><td>" + splitter[2] + "</td><td>" + splitter[3] + "</td><td>" + splitter[4] + "</td>");
-				tr.append("<tr/>");
-			//}
-			tr.append("<tr/>");
-		//}
+		tr.append("<td>" + forms[i].firstName + "</td>");
+		tr.append("<td>" + forms[i].lastName + "</td>");
+		tr.append("<td>" + forms[i].date + "</td>");
+		tr.append("<td>" + forms[i].status + "</td>");
+		tr.append("<td>" + forms[i].gradeFormat + "</td>");
+		tr.append("<tr/>")
+		
+		
 		$('#allappstable').append(tr);
-	
+		}
 	});
-	
 	
 });

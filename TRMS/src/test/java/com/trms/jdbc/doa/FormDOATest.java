@@ -48,10 +48,10 @@ public class FormDOATest {
 	}
 	@Test
 	public void testSubmitReimbursementRequest() throws SQLException{
-		assertTrue("Ensure check for negative cost form", formDOA.submitReimbursementRequest(1, -200, 4, "Just a test") == -1);
-		assertTrue("Ensure check non Existant gradescale ", formDOA.submitReimbursementRequest(1, 200, 0, "Just a test") == 0);
-		assertTrue("Ensure check for non existant gradescale form", formDOA.submitReimbursementRequest(1, 200, 7, "Just a test") == 7);
-		assertFalse("Check working gradescale and cost", formDOA.submitReimbursementRequest(1, 200, 6, "Just a test") == 6);
+		assertTrue("Ensure check for negative cost form", formDOA.submitReimbursementRequest(1, -200, 4, "Just a test") == false);
+		assertTrue("Ensure check non Existant gradescale ", formDOA.submitReimbursementRequest(1, 200, 0, "Just a test") == false);
+		assertTrue("Ensure check for non existant gradescale form", formDOA.submitReimbursementRequest(1, 200, 7, "Just a test") == false);
+		assertFalse("Check working gradescale and cost", formDOA.submitReimbursementRequest(1, 200, 6, "Just a test") == true);
 		
 	}
 	@Test 

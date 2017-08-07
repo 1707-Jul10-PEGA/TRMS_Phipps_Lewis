@@ -2,19 +2,26 @@ package com.trms.servlets;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.trms.jdbc.doa.FormImplementDOA;
+import com.trms.pojo.Form;
 
 /**
  * Servlet implementation class AllFormsServlet
  */
 public class AllFormsServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private static Logger log = Logger.getRootLogger();
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -36,21 +43,24 @@ public class AllFormsServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		//String empID = request.getParameter("empID");
-		//int input = Integer.parseInt(empID);
-		String output = "";
-		FormImplementDOA form = new FormImplementDOA();
+		ArrayList<Form> myForms = new ArrayList<Form>();
+		FormImplementDOA formdoa = new FormImplementDOA();
 		try {
-			output = form.getAllForms();
+			myForms = formdoa.getAllForms();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
-		System.out.println("output is" + output);
-		response.getWriter().append(output + "");
-
+		ObjectMapper om = new ObjectMapper();
+		String output = null;
+		try{
+			output = om.writeValueAsString(myForms);
+			}catch(JsonProcessingException e){
+				e.printStackTrace();
+			}
+		log.info(myForms);
+		response.getWriter().append(output);
+	
 	}
 
 }

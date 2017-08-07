@@ -1,15 +1,17 @@
 package com.trms.jdbc.doa;
 
-import java.sql.Statement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Savepoint;
+import java.sql.Statement;
+import java.util.ArrayList;
 
 import org.apache.log4j.Logger;
 
 import com.trms.jdbc.util.ConnectionFactory;
+import com.trms.pojo.Form;
 
 public class FormImplementDOA implements FormDOA {
 	private static Logger log = Logger.getRootLogger();
@@ -54,48 +56,39 @@ public class FormImplementDOA implements FormDOA {
 	}
 	/**
 	 * 
-	 * @param formID
+	 * @param formID Takes an employee ID
 	 * @return Returns the string representation of the form(s) associated with the id
 	 * @throws SQLEXception
 	 */
-	public String getFormsOnEmpID(int empID) throws SQLException{
-		String output = "";
+	public ArrayList<Form> getFormsOnEmpID(int empID) throws SQLException{
 		
-		String sql = "select employee.firstname, employee.lastname, form_submissions.date_made, form_submissions.status, form_submissions.grade_score from employee inner join form_submissions on employee.employeeid = form_submissions.employeeid where employee.employeeid = ?";
+		ArrayList<Form> myForms = new ArrayList<Form>();
+		String sql = "select employee.firstname, employee.lastname, form_submissions.Grade_Format_ID, form_submissions.Full_Cost, form_submissions.formID, form_submissions.date_made, form_submissions.status, form_submissions.grade_score, form_submissions.descript from employee inner join form_submissions on employee.employeeid = form_submissions.employeeid where employee.employeeid = ?";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		pstmt.setInt(1, empID);
-		
+		Form newForm = new Form();
 		ResultSet rs = pstmt.executeQuery();
 		while(rs.next()){
-			output = output + rs.getString("firstname");
-			output = output + ";" + rs.getString("lastname");
-			output = output + ";" + rs.getString("date_made");
-			output = output + ";" + rs.getString("status");
-			output = output + ";" + rs.getString("grade_score") + ";";
-			
+			Double myDouble = Double.valueOf(rs.getString("Full_Cost")); 
+			newForm = new Form(rs.getString("firstname"), rs.getString("lastname"), rs.getString("date_made"), rs.getInt(7), Integer.valueOf(rs.getInt(3)));
+			myForms.add(newForm);
 		}
-		
-		return output;
-		
-		
+		return myForms;
 	}
-	public String getAllForms() throws SQLException {
-		String output = "";
+	public ArrayList<Form> getAllForms() throws SQLException {
+		ArrayList<Form> myForms = new ArrayList<Form>();
 		
 		String sql = "select employee.firstname, employee.lastname, form_submissions.date_made, form_submissions.status, form_submissions.grade_score from employee inner join form_submissions on employee.employeeid = form_submissions.employeeid";
 		Statement stmt = conn.createStatement();
 		
+		Form newForm = new Form();
 		ResultSet rs = stmt.executeQuery(sql);
 		while(rs.next()){
-			output = output + rs.getString("firstname");
-			output = output + ";" + rs.getString("lastname");
-			output = output + ";" + rs.getString("date_made");
-			output = output + ";" + rs.getString("status");
-			output = output + ";" + rs.getString("grade_score") + ";";
-			
+			newForm = new Form(rs.getString("firstname"), rs.getString("lastname"), rs.getString("date_made"), rs.getInt(4), rs.getInt(5));	
+			myForms.add(newForm);
 		}
-		
-		return output;
+		System.out.println(myForms.toString());
+		return myForms;
 		
 	}
 
@@ -204,16 +197,16 @@ public class FormImplementDOA implements FormDOA {
 	 * @throws SQLException
 	 */
 	//Should this method check for a usable EmployeeID?
-	public void submitReimbursementRequest(int empId, double fullCost, int gradeFormatID, String description) throws SQLException{
+	public boolean submitReimbursementRequest(int empId, double fullCost, int gradeFormatID, String description) throws SQLException{
 		if(fullCost <= 0.0)
 		{
 			log.warn("Attempted to set Reimbursement amount to a zero or negative value, you attempted to enter: "+ fullCost);
-			return;
+			return false;
 		}
 		if(!(0 < gradeFormatID && gradeFormatID < 7))
 		{
 			log.warn("No such gradeFormatID, please enter a value in the range of 1-6, you attempted to input: " + gradeFormatID);
-			return;
+			return false;
 		}
 		
 		String sql = "INSERT INTO FORM_SUBMISSIONS (FormID, EmployeeID, Date_Made, Full_Cost, Grade_Format_ID, Grade_Score, Descript, Status)"
@@ -225,7 +218,7 @@ public class FormImplementDOA implements FormDOA {
 		pstmt.setString(4, description);
 		
 		pstmt.execute();
-		return;
+		return true;
 	
 		
 	}
@@ -235,7 +228,7 @@ public class FormImplementDOA implements FormDOA {
 	public int checkGradeOnFormID(int formID) throws SQLException{
 		
 		
-		String sql = "SELECT Grade_Score FROM FORM_SUBMISSION WHERE FormID = ?";
+		String sql = "SELECT Grade_Score FROM FORM_SUBMISSIONS WHERE FormID = ?";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		pstmt.setInt(1, formID);
 		
@@ -269,7 +262,7 @@ public class FormImplementDOA implements FormDOA {
 		//Selecting the current status, extraInfo is used if we attempt to increase approval level above max
 		String extraInfo = "";
 		String statusLevel = "This function has failed, please check the FormDOA";
-		String sql = "SELECT STATUS FROM FORM_SUBMISSION WHERE FormID = ?";
+		String sql = "SELECT STATUS FROM FORM_SUBMISSIONS WHERE FormID = ?";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		pstmt.setInt(1, formID);
 		
@@ -280,7 +273,7 @@ public class FormImplementDOA implements FormDOA {
 			int myApprovalLevel = rs.getInt(1);
 			
 			//Update form submission approval level to be one higher
-			String sql2 = "UPDATE FORM_SUBMISSION SET STATUS = ? WHERE FormID = ? ";
+			String sql2 = "UPDATE FORM_SUBMISSIONS SET STATUS = ? WHERE FormID = ? ";
 			PreparedStatement pstmt2 = conn.prepareStatement(sql2);
 			//Check that we don't go over our highest approval level
 			if(myApprovalLevel < 5 )

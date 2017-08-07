@@ -9,7 +9,7 @@ public interface FormDOA {
 	public double setFullCostOnFormID(int formID, Double newCost) throws SQLException;
 	public double setReimbursementCostOnFormID(int formID, Double newCost) throws SQLException;
 	
-	public void submitReimbursementRequest(int empId, double fullCost, int gradeFormatID, String description) throws SQLException;
+	public boolean submitReimbursementRequest(int empId, double fullCost, int gradeFormatID, String description) throws SQLException;
 	public int checkGradeOnFormID(int formID) throws SQLException;
 	public String increaseApprovalLevelOnFormID(int formID) throws SQLException;
 
