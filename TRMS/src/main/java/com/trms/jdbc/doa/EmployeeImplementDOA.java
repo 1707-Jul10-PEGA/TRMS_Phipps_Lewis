@@ -50,11 +50,6 @@ public class EmployeeImplementDOA implements EmployeeDOA {
 		return balance;
 	}
 	
-	
-	
-	
-	
-	
 	/**
 	 * Cancels the pending reimbursement request associated with the 
 	 * @return void.

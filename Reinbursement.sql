@@ -1,20 +1,8 @@
 
-   Reinbursement Requests
-   Script: TRMS.sql
-   Description: Creates and populates the TRMS Database
-   DB Server: Oracle
-   Author: Luis Rocha
-   License: http://www.codeplex.com/ChinookDatabase/license
-********************************************************************************/
 /*******************************************************************************
    Drop database if it exists
 ********************************************************************************/
 DROP USER trms CASCADE;
---DROP TABLE EMPLOYEE;
---DROP TABLE APPROVAL_STATUS;
---DROP TABLE DEPARTMENT;
---DROP TABLE FORM_SUBMISSIONS;
---DROP TABLE GRADE_FORMAT;
 
 /*******************************************************************************
    Create database
@@ -35,6 +23,11 @@ GRANT create view TO trms;
 
 conn trms/projectone
 
+DROP TABLE EMPLOYEE;
+DROP TABLE APPROVAL_STATUS;
+DROP TABLE DEPARTMENT;
+DROP TABLE FORM_SUBMISSIONS;
+DROP TABLE GRADE_FORMAT;
 
 /*******************************************************************************
    Create Tables
@@ -45,7 +38,7 @@ CREATE TABLE Employee
   firstName varchar2(32),
   lastName varchar2(32),
   userName varchar2(32),
-  pass varchar2(32),
+  pass varchar2(256),
   Reimbursement_total number,
   Direct_Supervisor number,
   DepartmentID number
@@ -149,14 +142,16 @@ TRUNCATE TABLE GRADE_FORMAT;
 INSERT INTO Department (DepartmentID, Name, Department_Head) VALUES (1, 'HR', null);
 INSERT INTO Department (DepartmentID, Name, Department_Head) VALUES (2, 'BenCo', null);
 
-INSERT INTO Employee (EmployeeID, firstName, lastName, userName, pass, Reimbursement_total, Direct_Supervisor, DepartmentID) VALUES (1,'Basic', 'Employee', 'Emp', 'pass', 1000, 2, 1);
-INSERT INTO Employee (EmployeeID, firstName, lastName, userName, pass, Reimbursement_total, Direct_Supervisor, DepartmentID) VALUES (2, 'Direct', 'Supervisor', 'DS', 'pass', 1000, null, 1);
-INSERT INTO Employee (EmployeeID, firstName, lastName, userName, pass, Reimbursement_total, Direct_Supervisor, DepartmentID) VALUES (3, 'Department', 'Head', 'DH', 'pass', 1000, null, 1);
-INSERT INTO Employee (EmployeeID, firstName, lastName, userName, pass, Reimbursement_total, Direct_Supervisor, DepartmentID) VALUES (4, 'Benco', 'regularBEN', 'Benco', 'pass', 1000, null, 2);
+INSERT INTO Employee (EmployeeID, firstName, lastName, userName, pass, Reimbursement_total, Direct_Supervisor, DepartmentID) VALUES (1,'Basic', 'Employee', 'Emp', '8KvKzosrxKdGPSEqIlfI7uSf4vQaJcs5tFi9VoMLirg=$9LA7aceX8vSWdIQdTL7tDTqG+Hwsg3s5UvvpUzIzQp4=', 1000, 2, 1);
+INSERT INTO Employee (EmployeeID, firstName, lastName, userName, pass, Reimbursement_total, Direct_Supervisor, DepartmentID) VALUES (2, 'Direct', 'Supervisor', 'DS', '8KvKzosrxKdGPSEqIlfI7uSf4vQaJcs5tFi9VoMLirg=$9LA7aceX8vSWdIQdTL7tDTqG+Hwsg3s5UvvpUzIzQp4=', 1000, null, 1);
+INSERT INTO Employee (EmployeeID, firstName, lastName, userName, pass, Reimbursement_total, Direct_Supervisor, DepartmentID) VALUES (3, 'Department', 'Head', 'DH', '8KvKzosrxKdGPSEqIlfI7uSf4vQaJcs5tFi9VoMLirg=$9LA7aceX8vSWdIQdTL7tDTqG+Hwsg3s5UvvpUzIzQp4=', 1000, null, 1);
+INSERT INTO Employee (EmployeeID, firstName, lastName, userName, pass, Reimbursement_total, Direct_Supervisor, DepartmentID) VALUES (4, 'Benco', 'regularBEN', 'Benco', '8KvKzosrxKdGPSEqIlfI7uSf4vQaJcs5tFi9VoMLirg=$9LA7aceX8vSWdIQdTL7tDTqG+Hwsg3s5UvvpUzIzQp4=', 1000, null, 2);
 
 
-INSERT INTO FORM_SUBMISSIONS (FormID, EmployeeID, Date_Made, Full_Cost, Grade_Format_ID, Grade_Score, Descript, Status) VALUES (1, 1, CURRENT_TIMESTAMP, 200, null, null, 'Testing', 1);
-
+INSERT INTO FORM_SUBMISSIONS (FormID, EmployeeID, Date_Made, Full_Cost, Grade_Format_ID, Grade_Score, Descript, Status) VALUES (1, 1, CURRENT_TIMESTAMP, 200, 2, null, 'Testing', 1);
+INSERT INTO FORM_SUBMISSIONS (FormID, EmployeeID, Date_Made, Full_Cost, Grade_Format_ID, Grade_Score, Descript, Status) VALUES (2, 4, CURRENT_TIMESTAMP, 200, 4, null, 'Testing', 2);
+INSERT INTO FORM_SUBMISSIONS (FormID, EmployeeID, Date_Made, Full_Cost, Grade_Format_ID, Grade_Score, Descript, Status) VALUES (3, 3, CURRENT_TIMESTAMP, 200, 2, null, 'Testing', 3);
+INSERT INTO FORM_SUBMISSIONS (FormID, EmployeeID, Date_Made, Full_Cost, Grade_Format_ID, Grade_Score, Descript, Status) VALUES (4, 4, CURRENT_TIMESTAMP, 200, 5, null, 'Testing', 4);
 INSERT INTO Approval_Status (StatusID, Descript) VALUES (-1, 'Request Canceled');
 INSERT INTO Approval_Status (StatusID, Descript) VALUES (0, 'Request Denied');
 INSERT INTO Approval_Status (StatusID, Descript) VALUES (1, 'No approvals');

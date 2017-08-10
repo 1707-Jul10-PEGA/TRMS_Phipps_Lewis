@@ -13,6 +13,8 @@ public class Passwords {
     private static final int iterations = 20*1000;
     private static final int saltLen = 32;
     private static final int desiredKeyLen = 256;
+    
+
 
     /** Computes a salted PBKDF2 hash of given plaintext password
         suitable for storing in a database. 

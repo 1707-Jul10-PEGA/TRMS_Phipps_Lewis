@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
+import com.trms.BD.Middleman;
 import com.trms.jdbc.doa.EmployeeImplementDOA;
 import com.trms.jdbc.doa.FormImplementDOA;
 
@@ -30,7 +30,11 @@ public class VerifyLogin extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	//protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {}
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		System.out.println("Made it to doGet");
+		response.sendRedirect("employee.html");
+	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
@@ -46,19 +50,25 @@ public class VerifyLogin extends HttpServlet {
 		EmployeeImplementDOA newDOA =  new EmployeeImplementDOA();
 		int test = -1;
 		try {
-			test = newDOA.getEmployeeIDOnLoginInfo(us, pass);
+			test = Middleman.verifyEmployee(us, pass);
+//			test = newDOA.getEmployeeIDOnLoginInfo(us, pass);
+			response.setStatus(200);
 		} catch (SQLException e) {
-		// TODO Auto-generated catch block
-		System.out.println("Failed");
-		e.printStackTrace();
+			response.setStatus(500);
+			response.sendError(500, "SQL System Failure.");
+			System.out.println("Failed");
+			e.printStackTrace();
+		}
+		if(test == -1)
+		{
+			response.setStatus(500);
 		}
 		
 		request.getSession(true).setAttribute("ID", test);
 		System.out.println("Your UserID is: " + request.getSession().getAttribute("ID"));
 		
-//		RequestDispatcher dispatcher = request.getRequestDispatcher("employee.html");
-//		dispatcher.forward(request, response);
-		response.sendRedirect("employee.html");
+
+
 }
 	
 	

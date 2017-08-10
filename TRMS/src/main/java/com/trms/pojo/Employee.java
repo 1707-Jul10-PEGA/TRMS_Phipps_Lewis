@@ -1,4 +1,6 @@
-package com.trms.BD;
+package com.trms.pojo;
+
+import com.trms.jdbc.util.Passwords;
 
 public class Employee {
 	private int employeeID;
@@ -8,11 +10,17 @@ public class Employee {
 	private int department;
 	
 	
-	public Employee(int employeeID, String userName, String password, int dsId, int department) {
-		super();
+	public Employee(int employeeID, String userName, String password, int dsId, int department, boolean plainTextPassword) throws Exception {
 		this.employeeID = employeeID;
 		this.userName = userName;
-		this.password = password;
+		if(plainTextPassword)
+		{
+		this.password = Passwords.getSaltedHash(password);
+		}
+		else if(!plainTextPassword)
+		{
+			this.password = password;
+		}
 		this.dsId = dsId;
 		this.department = department;
 	}
@@ -22,6 +30,4 @@ public class Employee {
 				+ dsId + ", department=" + department + "]";
 	}
 	
-	
-
 }

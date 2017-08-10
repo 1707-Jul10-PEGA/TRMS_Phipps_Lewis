@@ -4,44 +4,58 @@
 <title>Form Submission</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
 
 	<div class="container">
 		<h2>Reimbursement Request</h2>
 
-			<div class="form-group">
-				<label class="control-label col-sm-2" for="email">Full Cost</label>
-				<div class="col-sm-10">
-					<input type="text" class="form-control" id="cost"
-						placeholder="Enter the Cost of your Training here" required>
-				</div>
+		<div class="form-group">
+			<label class="control-label col-sm-2" for="email">Full Cost</label>
+			<div class="col-sm-10">
+				<input type="text" class="form-control" id="cost"
+					placeholder="Enter the Cost of your Training here" required>
 			</div>
-			<div class="form-group">
-				<label class="control-label col-sm-2" for="pwd">Event type:</label>
-				<div class="col-sm-10">
+		</div>
+		<div class="form-group">
+		<label class="control-label col-sm-2" for="pwd">Event Start Date</label>
+			<div class="col-sm-10">
 
-					<div class="form-group">
-						<select class="form-control" id="sel1">
-							<option>University Course</option>
-							<option>Seminar</option>
-							<option>Certification Preparation Class</option>
-							<option>Certification</option>
-							<option>Technical Training</option>
-							<option>Other</option>
-						</select>
-					</div>
-					<button type="submit" id="submission" class="btn btn-default">Submit</button>
-					<button class="btn btn-default" type="submit" onclick="location.href='employee.html';" id="other stuff">Return to Employee Page</button>
-				</div>
+				<input type="date" id="theDate" required>
 			</div>
+		</div>
+				<div class="form-group">
+			<label class="control-label col-sm-2" for="text">Description of Event</label>
+			<div class="col-sm-10">
+				<input type="text" class="form-control" id="descript"
+					placeholder="Enter a brief description of your event here" required>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-sm-2" for="pwd">Event type:</label>
+			<div class="col-sm-10">
+
+				<div class="form-group">
+					<select class="form-control" id="sel1">
+						<option>University Course</option>
+						<option>Seminar</option>
+						<option>Certification Preparation Class</option>
+						<option>Certification</option>
+						<option>Technical Training</option>
+						<option>Other</option>
+					</select>
+				</div>
+				<button type="submit" id="submission" class="btn btn-default">Submit</button>
+				<button class="btn btn-default" type="submit"
+					onclick="location.href='employee.html';" id="other stuff">Return
+					to Employee Page</button>
+			</div>
+		</div>
+
 	</div>
-<script src="resources/js/submitform.js"></script>
+	<script src="resources/js/submitform.js"></script>
 </body>
 </html>

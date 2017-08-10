@@ -8,7 +8,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.trms.BD.Middleman;
 import com.trms.jdbc.doa.FormImplementDOA;
+import com.trms.jdbc.util.ConversionTools;
 
 /**
  * Servlet implementation class SubmitForm
@@ -45,39 +47,16 @@ public class SubmitForm extends HttpServlet {
 		System.out.println("in Submit Servlet Post");
 		Double myCost = Double.parseDouble(request.getParameter("cost"));
 		String myType = request.getParameter("grade");
-		Integer myID = (Integer) request.getSession().getAttribute("ID");
-		int myGrade = 1;
-		System.out.println(myCost + " " + myType);
-		switch (myType) {
-		case "University Course":
-			myGrade = 1;
-			break;
-		case "Seminar":
-			myGrade = 2;
-			break;
-		case "Certification Preparation Class":
-			myGrade = 3;
-			break;
-		case "Certification":
-			myGrade = 4;
-			break;
-		case "Technical Training":
-			myGrade = 5;
-			break;
-		case "Other": myGrade = 6;
-		break;
-		default:
-			throw new IllegalArgumentException("You have selected an invalid course type");
+		Integer myID = 10;//(Integer) request.getSession().getAttribute("ID");
+		String date = request.getParameter("date");
+		String descript = request.getParameter("description");
+		System.out.println(myCost + " " + myType + " " + descript + " date: "+ date);
+		//Attempt to create a form, not if the latter functions fail to generate a form, this will be false
+		if(!Middleman.createForm(myID, date, myCost, ConversionTools.NameToGrade(myType), descript)){
+			//if it fails, set response code to 400
+			response.setStatus(400);
 		}
-		FormImplementDOA newDOA = new FormImplementDOA();
-		try {
-			newDOA.submitReimbursementRequest(myID, myCost, myGrade, "A new submission");
-			System.out.println("Success on making a new submission!");
-		} catch (SQLException e) {
-			System.out.println("Failed to generate new submission");
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+
 
 	}
 

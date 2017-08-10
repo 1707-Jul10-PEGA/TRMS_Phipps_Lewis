@@ -1,17 +1,19 @@
 package com.trms.pojo;
 
+import com.trms.jdbc.util.ConversionTools;
+
 public class Form {
 	private String date;
-	private int gradeFormat;
-	private int status;
+	private String gradeFormat;
+	private String status;
 	private String firstName;
 	private String lastName;
 	
 	public Form(){
 
 		this.date = "Failed to generate proper form";
-		this.gradeFormat = -1;
-		this.status = -1;
+		this.gradeFormat = ConversionTools.GradeToName(-1);
+		this.status = ConversionTools.StatusToName(-1);
 		this.firstName = "Fake";
 		this.lastName = "Failed";
 	}
@@ -19,8 +21,8 @@ public class Form {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.date = date;
-		this.status = Status;
-		this.gradeFormat = Grade;
+		this.status = ConversionTools.StatusToName(-1);
+		this.gradeFormat = ConversionTools.GradeToName(Grade);
 	
 	}
 	public String getDate() {
@@ -29,17 +31,23 @@ public class Form {
 	public void setDate(String date) {
 		this.date = date;
 	}
-	public int getGradeFormat() {
+	public String getGradeFormat() {
 		return gradeFormat;
 	}
 	public void setGradeFormat(int gradeFormat) {
+		this.gradeFormat = ConversionTools.GradeToName(gradeFormat);
+	}
+	public void setGradeFormat(String gradeFormat){
 		this.gradeFormat = gradeFormat;
 	}
-	public int getStatus() {
+	public String getStatus() {
 		return status;
 	}
 	public void setStatus(int status) {
-		status = status;
+		this.status = ConversionTools.StatusToName(status);
+	}
+	public void setStatus(String status) {
+		this.status = status;
 	}
 	public String getFirstName() {
 		return firstName;

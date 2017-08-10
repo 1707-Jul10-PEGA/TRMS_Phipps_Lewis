@@ -43,8 +43,9 @@ public class GetFormServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		ArrayList<Form> myForms = new ArrayList<Form>();
 		FormImplementDOA formdoa = new FormImplementDOA();
+		Integer myInt = (Integer) request.getSession().getAttribute("ID");
 		try {
-			myForms = formdoa.getFormsOnEmpID(1);
+			myForms = formdoa.getFormsOnEmpID(myInt);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
